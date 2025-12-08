@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home - {{ block.super }}{% endblock title %}
+
+{% block content %}
+
+<section class="hero-section position-relative">
+    <div class="container hero-content text-center">
+        <h1 class="display-3 fw-bold text-white mb-3">Find Your Furry Soulmate</h1>
+        <p class="lead text-white-50 mb-5 fs-4">
+            Connect with thousands of adoptable pets and help lost animals find their way home.
+        </p>
+
+        <div class="card border-0 shadow-lg p-4 mx-auto" style="max-width: 800px; border-radius: 1rem;">
+            <form action="{% url 'core:search_pets' %}" method="get" class="row g-3 align-items-end">
+                <div class="col-md-4 text-start">
+                    <label for="pet_type" class="form-label fw-bold small text-uppercase text-muted">I'm looking for</label>
+                    <select name="pet_type" id="pet_type" class="form-select form-select-lg">
+                        <option value="" selected>All Pets</option>
+                        <option value="Dog">Dog</option>
+                        <option value="Cat">Cat</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="col-md-5 text-start">
+                    <label for="breed" class="form-label fw-bold small text-uppercase text-muted">Breed (Optional)</label>
+                    <input type="text" name="breed" id="breed" class="form-control form-control-lg" placeholder="e.g. Golden Retriever">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary btn-lg w-100 h-100">
+                        <i class="bi bi-search me-2"></i>Search
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-4">
+            <span class="text-white me-2">Or:</span>
+            <a href="{% url 'core:report_lost_pet' %}" class="text-warning text-decoration-none fw-bold me-3">
+                <i class="bi bi-flag-fill"></i> Report Lost Pet
+            </a>
+            <a href="{% url 'core:report_found_pet' %}" class="text-info text-decoration-none fw-bold">
+                <i class="bi bi-geo-alt-fill"></i> Report Found Pet
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-md-3 col-6">
+                <div class="p-3">
+                    <i class="bi bi-house-heart fs-1 text-primary mb-2"></i>
+                    <h2 class="fw-bold display-6">15k+</h2>
+                    <p class="text-white-50">Pets Adopted</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="p-3">
+                    <i class="bi bi-emoji-smile fs-1 text-warning mb-2"></i>
+                    <h2 class="fw-bold display-6">5k+</h2>
+                    <p class="text-white-50">Reunited</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="p-3">
+                    <i class="bi bi-hospital fs-1 text-success mb-2"></i>
+                    <h2 class="fw-bold display-6">200+</h2>
+                    <p class="text-white-50">Shelters</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="p-3">
+                    <i class="bi bi-people fs-1 text-info mb-2"></i>
+                    <h2 class="fw-bold display-6">50k+</h2>
+                    <p class="text-white-50">Users</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <h6 class="text-primary fw-bold text-uppercase ls-2">Services</h6>
+            <h2 class="fw-bold">How We Help</h2>
+            <p class="text-muted w-75 mx-auto">We provide a centralized platform to manage pet safety and adoption.</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm text-center p-4 hover-lift">
+                    <div class="mb-3 mx-auto bg-danger bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-exclamation-triangle-fill text-danger fs-2"></i>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Lost a Pet?</h4>
+                        <p class="card-text text-muted">Create a detailed report with photos and location data to alert the community immediately.</p>
+                        <a href="{% url 'core:report_lost_pet' %}" class="btn btn-outline-danger btn-sm mt-2">Report Lost</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm text-center p-4 hover-lift">
+                    <div class="mb-3 mx-auto bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-geo-alt-fill text-success fs-2"></i>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Found a Pet?</h4>
+                        <p class="card-text text-muted">Help a lost animal find its owner by posting a "Found" report. Every second counts.</p>
+                        <a href="{% url 'core:report_found_pet' %}" class="btn btn-outline-success btn-sm mt-2">Report Found</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm text-center p-4 hover-lift">
+                    <div class="mb-3 mx-auto bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-heart-fill text-primary fs-2"></i>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Adopt a Friend</h4>
+                        <p class="card-text text-muted">Browse our extensive database of adoptable pets waiting for a loving forever home.</p>
+                        <a href="{% url 'core:search_pets' %}" class="btn btn-outline-primary btn-sm mt-2">Browse Pets</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold mb-0">Featured Pets</h2>
+                <p class="text-muted mb-0">Recently added friends looking for homes.</p>
+            </div>
+            <a href="{% url 'core:search_pets' %}" class="btn btn-link text-decoration-none fw-bold">View All <i class="bi bi-arrow-right"></i></a>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="position-relative">
+                        <img src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top" alt="Buddy">
+                        <span class="badge bg-success position-absolute top-0 end-0 m-3">Adoptable</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Buddy</h5>
+                        <p class="text-muted small"><i class="bi bi-dot"></i> Dog <i class="bi bi-dot"></i> Labrador</p>
+                        <p class="card-text">Friendly, energetic, and loves playing fetch. Great with kids!</p>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-3">
+                         <a href="{% url 'core:search_pets' %}" class="btn btn-primary w-100 rounded-pill">Meet Buddy</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="position-relative">
+                        <img src="https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top" alt="Whiskers">
+                        <span class="badge bg-success position-absolute top-0 end-0 m-3">Adoptable</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Whiskers</h5>
+                        <p class="text-muted small"><i class="bi bi-dot"></i> Cat <i class="bi bi-dot"></i> Tabby</p>
+                        <p class="card-text">Calm and affectionate. Loves sunny spots and warm laps.</p>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-3">
+                         <a href="{% url 'core:search_pets' %}" class="btn btn-primary w-100 rounded-pill">Meet Whiskers</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="position-relative">
+                        <img src="https://images.pexels.com/photos/2071881/pexels-photo-2071881.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top" alt="Mittens">
+                        <span class="badge bg-success position-absolute top-0 end-0 m-3">Adoptable</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Mittens</h5>
+                        <p class="text-muted small"><i class="bi bi-dot"></i> Cat <i class="bi bi-dot"></i> Kitten</p>
+                        <p class="card-text">Playful kitten looking for a family to grow up with.</p>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-3">
+                         <a href="{% url 'core:search_pets' %}" class="btn btn-primary w-100 rounded-pill">Meet Mittens</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h3 class="text-center fw-bold mb-5">Happy Tails (Success Stories)</h3>
+        
+        <div id="testimonialCarousel" class="carousel slide text-center" data-bs-ride="carousel">
+            <div class="carousel-inner" style="min-height: 200px;">
+                <div class="carousel-item active">
+                    <div class="w-75 mx-auto">
+                        <i class="bi bi-quote fs-1 text-primary opacity-50"></i>
+                        <p class="fs-4 fst-italic mb-4">"I found my best friend here. The process was simple, and the support was amazing!"</p>
+                        <h5 class="fw-bold">— Sarah Jenkins</h5>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="w-75 mx-auto">
+                        <i class="bi bi-quote fs-1 text-primary opacity-50"></i>
+                        <p class="fs-4 fst-italic mb-4">"Thanks to this site, our lost beagle 'Max' was home within 24 hours. We are forever grateful."</p>
+                        <h5 class="fw-bold">— The Henderson Family</h5>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="w-75 mx-auto">
+                        <i class="bi bi-quote fs-1 text-primary opacity-50"></i>
+                        <p class="fs-4 fst-italic mb-4">"Adopting Luna changed my life. I highly recommend using this platform."</p>
+                        <h5 class="fw-bold">— Mike Ross</h5>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-primary text-white text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3">Ready to Make a Difference?</h2>
+        <p class="lead mb-4">Join our community today to help pets find the love and safety they deserve.</p>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'signup' %}" class="btn btn-light btn-lg px-5 rounded-pill fw-bold text-primary shadow">Create an Account</a>
+        {% else %}
+             <a href="{% url 'core:search_pets' %}" class="btn btn-light btn-lg px-5 rounded-pill fw-bold text-primary shadow">Start Browsing</a>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock content %}

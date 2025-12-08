@@ -1,0 +1,328 @@
+/* =========================================
+   1. BRAND VARIABLES & THEME SETUP
+   ========================================= */
+:root {
+  /* Core Brand Colors */
+  --primary-color: #00695C;       /* Deep Teal */ /* Primary brand color variable */
+  --primary-dark: #004D40;        /* Darker Teal for hover */ /* Darker primary color for hover effects */
+  --secondary-color: #FFB74D;     /* Soft Orange */ /* Secondary brand color variable */
+  --secondary-dark: #F57C00;      /* Darker Orange */ /* Darker secondary color */
+  
+  /* Text & Backgrounds */
+  --text-main: #2c3e50; /* Main dark text color */
+  --text-light: #f8f9fa; /* Main light text color */
+  --bg-light: #ffffff; /* Main light background color */
+  --bg-off-white: #f4f6f7; /* Off-white background color */
+  
+  /* UX/UI Variables */
+  --border-radius-sm: 8px; /* Small border radius variable */
+  --border-radius-lg: 15px; /* Large border radius variable */
+  --box-shadow-card: 0 10px 20px rgba(0, 0, 0, 0.05); /* Standard card shadow */
+  --box-shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow for hover effects */
+  --transition-speed: 0.3s; /* Standard transition duration */
+  --font-main: 'Poppins', sans-serif; /* Main font family */
+}
+
+/* Dark Mode Support (matches Bootstrap 5.3 data-bs-theme) */
+[data-bs-theme="dark"] {
+  --primary-color: #4DB6AC;       /* Lighter Teal for dark mode */ /* Light teal for dark mode */
+  --primary-dark: #80CBC4; /* Lighter dark teal */
+  --text-main: #eceff1; /* Light text color for dark mode */
+  --bg-light: #263238; /* Dark card background */
+  --bg-off-white: #1e272e; /* Dark page background */
+  --box-shadow-card: 0 10px 20px rgba(0, 0, 0, 0.3); /* Darker card shadow */
+}
+
+/* =========================================
+   2. GLOBAL TYPOGRAPHY & LAYOUT
+   ========================================= */
+body {
+  font-family: var(--font-main); /* Apply main font */
+  color: var(--text-main); /* Apply main text color */
+  background-color: var(--bg-off-white); /* Apply page background color */
+  /* Subtle pattern overlay */ /* Create a subtle background pattern */
+  background-image: radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 30px 30px; /* Set size of the background pattern */
+  
+  min-height: 100vh; /* Ensure body takes up full viewport height */
+  display: flex; /* Use flexbox for body layout */
+  flex-direction: column; /* Stack elements vertically */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: 700; /* Bold header text */
+  color: inherit; /* Inherit color from parent (or theme) */
+  margin-bottom: 1rem; /* Standard bottom margin */
+}
+
+/* Improving text readability */
+p {
+  line-height: 1.7; /* Increase line spacing for readability */
+  letter-spacing: 0.3px; /* Add slight letter spacing */
+  margin-bottom: 1.5rem; /* Increase paragraph bottom margin */
+}
+
+/* =========================================
+   3. NAVIGATION BAR
+   ========================================= */
+.navbar {
+  background-color: #00695C !important; /* Force Brand Color */ /* Set navigation background color */
+  backdrop-filter: blur(10px);          /* Glassmorphism effect */ /* Apply a blur effect */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  padding: 1rem 0; /* Set vertical padding */
+  transition: padding var(--transition-speed) ease; /* Animate padding changes */
+}
+
+.navbar-brand {
+  font-weight: 800; /* Bold brand text */
+  font-size: 1.75rem; /* Large brand font size */
+  letter-spacing: -0.5px; /* Tighten letter spacing */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add text shadow */
+}
+
+.nav-link {
+  font-weight: 500; /* Semi-bold link text */
+  position: relative; /* Establish context for ::before pseudo-element */
+  opacity: 0.9; /* Slightly reduced opacity */
+  transition: all var(--transition-speed) ease; /* Apply transition to all changes */
+}
+
+.nav-link:hover, .nav-link:focus {
+  opacity: 1; /* Full opacity on hover/focus */
+  transform: translateY(-2px); /* Subtle lift */ /* Subtle vertical lift animation */
+}
+
+.nav-link::before {
+  content: ''; /* Required for pseudo-element */
+  position: absolute; /* Position absolutely relative to the link */
+  width: 0; /* Start with zero width for the underline */
+  height: 2px; /* Underline thickness */
+  bottom: 0; /* Position at the bottom of the link */
+  left: 50%; /* Start the underline from the center */
+  background-color: var(--secondary-color); /* Use secondary color for underline */
+  transition: all var(--transition-speed) ease; /* Animate the width/position change */
+}
+
+.nav-link:hover::before {
+  width: 80%; /* Expand underline width on hover */
+  left: 10%; /* Center the expanded underline */
+}
+
+/* =========================================
+   4. HERO SECTION (Parallax & Animation)
+   ========================================= */
+.hero-section {
+  position: relative; /* Position context for children */
+  /* Parallax Effect: background-attachment: fixed */ /* Apply color and image background */
+  background: linear-gradient(135deg, rgba(0, 105, 92, 0.85), rgba(0, 77, 64, 0.75)),
+              url('https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+  background-attachment: fixed; /* Enable the parallax scrolling effect */
+  background-size: cover; /* Ensure the background covers the entire section */
+  background-position: center; /* Center the background image */
+  min-height: 650px; /* Minimum height for the hero section */
+  display: flex; /* Use flexbox for content centering */
+  align-items: center; /* Vertically center content */
+  justify-content: center; /* Horizontally center content */
+  color: white; /* Set text color to white */
+  text-align: center; /* Center text inside the section */
+  clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%); /* Modern angled bottom */ /* Creates a modern angled bottom edge */
+}
+
+/* Entry Animation */
+.hero-content {
+  animation: fadeUp 1s ease-out forwards; /* Apply the fadeUp keyframe animation */
+  opacity: 0; /* Start hidden */ /* Start element hidden */
+  transform: translateY(30px); /* Start element 30px below final position */
+}
+
+.hero-content h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem); /* Responsive font sizing */ /* Fluidly adjust font size based on viewport */
+  text-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Apply shadow to the heading text */
+  margin-bottom: 1.5rem; /* Bottom margin */
+}
+
+/* =========================================
+   5. CARDS (Pet Listings)
+   ========================================= */
+.card {
+  border: none; /* Remove default border */
+  background-color: var(--bg-light); /* Set background color */
+  border-radius: var(--border-radius-lg); /* Apply large border radius */
+  box-shadow: var(--box-shadow-card); /* Apply standard card shadow */
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease; /* Transition for hover effects */
+  overflow: hidden; /* Clip child content */
+  height: 100%; /* Ensure cards are equal height in grid */
+}
+
+.card:hover {
+  transform: translateY(-8px); /* Lift the card slightly on hover */
+  box-shadow: var(--box-shadow-hover); /* Apply heavier shadow on hover */
+}
+
+.card-img-top {
+  height: 250px; /* Fixed height for pet images */
+  object-fit: cover; /* Ensure image covers the area without distortion */
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother transition for zoom effect */
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.08); /* Zoom effect */ /* Zoom the image inside the card on hover */
+}
+
+.card-body {
+  padding: 1.5rem; /* Internal padding */
+  display: flex; /* Use flexbox for body content */
+  flex-direction: column; /* Stack elements vertically */
+}
+
+/* =========================================
+   6. FORMS (Modern Styling)
+   ========================================= */
+.form-label {
+  font-weight: 600; /* Bold label text */
+  color: var(--text-main); /* Use main text color */
+  margin-bottom: 0.5rem; /* Bottom margin */
+}
+
+.form-control, .form-select {
+  border: 2px solid #e0e0e0; /* Custom light border */
+  border-radius: var(--border-radius-sm); /* Small border radius */
+  padding: 0.75rem 1rem; /* Internal padding */
+  font-size: 1rem; /* Standard font size */
+  transition: all var(--transition-speed) ease; /* Apply transition to all changes */
+  background-color: var(--bg-light); /* Light background color */
+  color: var(--text-main); /* Dark text color */
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color); /* Primary color border on focus */
+  box-shadow: 0 0 0 4px rgba(0, 105, 92, 0.15); /* Custom focus ring */ /* Custom focus ring shadow */
+  outline: none; /* Remove default outline */
+}
+
+/* File Input styling */
+input[type="file"] {
+  padding: 0.5rem; /* Internal padding */
+  background-color: #f8f9fa; /* Light background */
+  border: 2px dashed #ccc; /* Dashed border for visual cue */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+/* =========================================
+   7. BUTTONS & INTERACTIVE ELEMENTS
+   ========================================= */
+.btn {
+  border-radius: 50px; /* Pill shape button */
+  padding: 0.7rem 1.8rem; /* Custom padding */
+  font-weight: 600; /* Semi-bold text */
+  text-transform: uppercase; /* Uppercase text */
+  letter-spacing: 0.5px; /* Add slight letter spacing */
+  transition: all var(--transition-speed) ease; /* Apply transition to all changes */
+  position: relative; /* Position context for effects */
+  overflow: hidden; /* Hide overflow for hover effects */
+  z-index: 1; /* Ensure button is above other elements */
+}
+
+.btn-primary {
+  background-color: var(--primary-color); /* Primary background color */
+  border: none; /* Remove border */
+  box-shadow: 0 4px 15px rgba(0, 105, 92, 0.3); /* Standard shadow */
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark); /* Darker color on hover */
+  transform: translateY(-3px); /* Lift button on hover */
+  box-shadow: 0 8px 25px rgba(0, 105, 92, 0.4); /* Heavier shadow on hover */
+}
+
+.btn-secondary, .btn-light {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Standard shadow for secondary buttons */
+}
+
+.btn:active {
+  transform: translateY(-1px); /* Slightly press the button down on click */
+}
+
+/* =========================================
+   8. ANIMATIONS
+   ========================================= */
+@keyframes fadeUp {
+  from {
+    opacity: 0; /* Start invisible */
+    transform: translateY(40px); /* Start 40px down */
+  }
+  to {
+    opacity: 1; /* End fully visible */
+    transform: translateY(0); /* End at original position */
+  }
+}
+
+/* Apply staggered animation to grid items if desired */
+.row .col-md-4:nth-child(1) { animation: fadeUp 0.6s ease-out forwards; } /* Apply fadeUp with delay 1 */
+.row .col-md-4:nth-child(2) { animation: fadeUp 0.8s ease-out forwards; } /* Apply fadeUp with delay 2 */
+.row .col-md-4:nth-child(3) { animation: fadeUp 1.0s ease-out forwards; } /* Apply fadeUp with delay 3 */
+
+/* =========================================
+   9. FOOTER
+   ========================================= */
+footer {
+  background-color: #263238 !important; /* Dark slate background color */
+  color: #cfd8dc !important; /* Light text color */
+  padding: 4rem 0 2rem; /* Custom vertical padding */
+  margin-top: auto; /* Push footer to the bottom */
+}
+
+footer a {
+  color: var(--secondary-color); /* Link color (secondary brand) */
+  text-decoration: none; /* Remove underline */
+  position: relative; /* Position context for ::before pseudo-element */
+}
+
+footer a::before {
+  content: ''; /* Required for pseudo-element */
+  position: absolute; /* Position absolutely relative to the link */
+  width: 100%; /* Full width underline */
+  height: 1px; /* Underline thickness */
+  bottom: -2px; /* Position slightly below text */
+  left: 0; /* Start position */
+  background-color: var(--secondary-color); /* Underline color */
+  transform: scaleX(0); /* Initially scale to zero (hidden) */
+  transform-origin: right; /* Scale animation origin from right */
+  transition: transform var(--transition-speed) ease; /* Animate scale change */
+}
+
+footer a:hover::before {
+  transform: scaleX(1); /* Show full underline on hover */
+  transform-origin: left; /* Change animation origin to left */
+}
+
+/* =========================================
+   10. RESPONSIVE UTILITIES
+   ========================================= */
+@media (max-width: 768px) { /* Start of mobile-specific styles */
+  .hero-section {
+    min-height: 450px; /* Reduce hero height on mobile */
+    background-attachment: scroll; /* Disable parallax on mobile for performance */ /* Disable parallax for performance */
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem; /* Reduce hero heading size */
+  }
+  
+  .card-img-top {
+    height: 200px; /* Reduce card image height */
+  }
+  
+  .btn {
+    width: 100%; /* Full width buttons on mobile */ /* Make buttons full width */
+    margin-bottom: 0.5rem; /* Add margin below buttons */
+  }
+  
+  .navbar-collapse {
+    background-color: var(--primary-color); /* Apply background to collapsed menu */
+    padding: 1rem; /* Add padding to collapsed menu */
+    border-radius: 0 0 15px 15px; /* Round the bottom corners */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Add shadow to collapsed menu */
+  }
+}

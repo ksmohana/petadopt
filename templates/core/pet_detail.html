@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}{{ pet.pet_name|default:"Pet Details" }} - {{ block.super }}{% endblock title %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb" class="mb-2">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:search_pets' %}">Search</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ pet.pet_name|default:"Pet Details" }}</li>
+  </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="card shadow-sm">
+            {% if pet.image %}
+                <img src="{{ pet.image.url }}" class="card-img-top" alt="{{ pet.pet_name }}">
+            {% else %}
+                <img src="https://via.placeholder.com/800x600.png?text=No+Photo+Available" class="card-img-top" alt="No Photo">
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title">{{ pet.pet_name|default:"Unnamed Pet" }}</h2>
+
+                <p>
+                    {% if pet.status == 'Lost' %}
+                        <span class_("badge bg-danger fs-6">{{ pet.status }}</span>
+                    {% elif pet.status == 'Found' %}
+                        <span class="badge bg-info fs-6">{{ pet.status }}</span>
+                    {% else %}
+                        <span class_("badge bg-success fs-6">{{ pet.status }}</span>
+                    {% endif %}
+                </p>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Type:</strong> {{ pet.pet_type }}</li>
+                    <li class="list-group-item"><strong>Breed:</strong> {{ pet.breed|default:"N/A" }}</li>
+                    <li class="list-group-item"><strong>Color:</strong> {{ pet.color }}</li>
+                    <li class="list-group-item"><strong>Last Seen:</strong> {{ pet.last_seen_location }}</li>
+
+                    {% if pet.date_lost %}
+                    <li class="list-group-item"><strong>Date Lost:</strong> {{ pet.date_lost|date:"M d, Y" }}</li>
+                    {% endif %}
+
+                    {% if pet.date_found %}
+                    <li class="list-group-item"><strong>Date Found:</strong> {{ pet.date_found|date:"M d, Y" }}</li>
+                    {% endif %}
+                </ul>
+
+                <h5 class="mt-4">Description</h5>
+                <p>{{ pet.description }}</p>
+
+            </div>
+        </div>
+
+        <div class="card shadow-sm mt-3">
+            <div class="card-body">
+                <h5 class="card-title">Reporter Information</h5>
+                <p>
+                    This pet was reported by: <strong>{{ pet.posted_by.username }}</strong>
+                </p>
+                <ul>
+                    <li><strong>Email:</strong> {{ pet.posted_by.email }}</li>
+                    <li><strong>Phone:</strong> {{ reporter.phone_number|default:"N/A" }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - {{ block.super }}{% endblock title %}
+
+{% block content %}
+<h1 class="text-center mb-4">Admin Dashboard</h1>
+
+<h2 class="mb-3">Pending Requests</h2>
+
+{% if pending_requests %}
+    <div class="row">
+        {% for req in pending_requests %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                {% if req.pet.image %}
+                    <img src="{{ req.pet.image.url }}" class="card-img-top" alt="{{ req.pet.pet_name }}" style="height: 250px; object-fit: cover;">
+                {% else %}
+                    <img src="https://via.placeholder.com/400x250.png?text=No+Photo" class="card-img-top" alt="No Photo">
+                {% endif %}
+
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">
+                        {% if req.request_type == 'Lost Report' %}
+                            <span class="badge bg-danger">{{ req.request_type }}</span>
+                        {% else %}
+                            <span class="badge bg-info">{{ req.request_type }}</span>
+                        {% endif %}
+                    </h5>
+
+                    <p class="card-text">
+                        <strong>Pet:</strong> {{ req.pet.pet_name|default:"Unnamed" }} ({{ req.pet.pet_type }})<br>
+                        <strong>Location:</strong> {{ req.pet.last_seen_location }}<br>
+                        <strong>Reported by:</strong> {{ req.user.username }} on {{ req.date_requested|date:"M d, Y" }}
+                    </p>
+
+                    <div class="d-flex justify-content-between mt-auto">
+                        <a href="{% url 'core:update_request_status' req.id 'approve' %}" class="btn btn-success">Accept</a>
+                        <a href="{% url 'core:update_request_status' req.id 'reject' %}" class="btn btn-danger">Reject</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-success" role="alert">
+        All requests have been reviewed. Good job!
+    </div>
+{% endif %}
+
+<hr class="my-4">
+
+<h2>Reviewed Requests</h2>
+<div class="accordion" id="reviewedRequests">
+
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingApproved">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseApproved" aria-expanded="false" aria-controls="collapseApproved">
+        Approved Requests ({{ approved_requests.count }})
+      </button>
+    </h2>
+    <div id="collapseApproved" class="accordion-collapse collapse" aria-labelledby="headingApproved" data-bs-parent="#reviewedRequests">
+      <div class="accordion-body">
+        <div class="row">
+          {% for req in approved_requests %}
+          <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                      <h5 class="card-title"><span class="badge bg-success">{{ req.request_type }}</span></h5>
+                      <p class="card-text">
+                          <strong>Pet:</strong> {{ req.pet.pet_name|default:"Unnamed" }}<br>
+                          <strong>Reported by:</strong> {{ req.user.username }}
+                      </p>
+                      <a href="{% url 'core:update_request_status' req.id 'reject' %}" class="btn btn-sm btn-outline-danger">Move to Rejected</a>
+                  </div>
+              </div>
+          </div>
+          {% empty %}
+          <p>No requests have been approved yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingRejected">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRejected" aria-expanded="false" aria-controls="collapseRejected">
+        Rejected Requests ({{ rejected_requests.count }})
+      </button>
+    </h2>
+    <div id="collapseRejected" class="accordion-collapse collapse" aria-labelledby="headingRejected" data-bs-parent="#reviewedRequests">
+      <div class="accordion-body">
+        <div class="row">
+          {% for req in rejected_requests %}
+          <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                      <h5 class="card-title"><span class="badge bg-secondary">{{ req.request_type }}</span></h5>
+                      <p class="card-text">
+                          <strong>Pet:</strong> {{ req.pet.pet_name|default:"Unnamed" }}<br>
+                          <strong>Reported by:</strong> {{ req.user.username }}
+                      </p>
+                      <a href="{% url 'core:update_request_status' req.id 'approve' %}" class="btn btn-sm btn-outline-success">Move to Approved</a>
+                  </div>
+              </div>
+          </div>
+          {% empty %}
+          <p>No requests have been rejected.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
